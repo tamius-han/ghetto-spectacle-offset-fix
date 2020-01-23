@@ -27,5 +27,5 @@ So you go on the internet, straight to ~~the KDE bugtracker and start scre—~~ 
 
 ----
 
-¹This setup is more like /r/shittyunixporn but you get the gist 
+¹This setup is more like /r/shittyunixporn but you get the gist  
 ²I don't know why do I feel the need to personally attack myself like this on my own github but hey
