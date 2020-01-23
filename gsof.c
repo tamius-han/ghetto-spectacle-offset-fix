@@ -15,13 +15,14 @@ static int error_handler(Display* display, XErrorEvent *error) {
 
 int main() {
   Display* display = XOpenDisplay(0);
-  const char spectacleWindowName[] = "Spectacle";
 
   XEvent e;
   Window rootWindow = DefaultRootWindow(display);
   XSelectInput(display, rootWindow, SubstructureNotifyMask);
 
   Atom netWmName = XInternAtom(display, "_NET_WM_NAME", True);  // we want _NET_WM_NAME, not WM_NAME
+  Atom wmClass = XInternAtom(display, "WM_CLASS", True);
+  Atom wmNormalHints = XInternAtom(display, "WM_NORMAL_HINTS", True);
   Atom type;
   int format;
   int error;
@@ -35,8 +36,10 @@ int main() {
     // we want to catch this event (possibly also configure notify, but that's less certain)
     if (e.type == CreateNotify || e.type == ConfigureNotify) {
       unsigned char* properties = NULL;
+      unsigned char* classProperties = NULL; 
       XGetWindowProperty(display, e.xcreatewindow.window, netWmName, 0, (~0L), False, AnyPropertyType, &type, &format, &nItem, &bytesAfter, &properties);
-      // printf("_NET_WM_TITLE:%s\n", properties);
+      XGetWindowProperty(display, e.xcreatewindow.window, wmClass,   0, (~0L), False, AnyPropertyType, &type, &format, &nItem, &bytesAfter, &classProperties);
+      // printf("_NET_WM_TITLE:%s, classProperties:%s;\n", properties, classProperties);
 
       // XTextProperty *windowTitle;
       // XGetWMName(display, e.xcreatewindow.window, windowTitle);
@@ -47,11 +50,22 @@ int main() {
         continue;
       }
 
-      if (properties && strcmp(spectacleWindowName, properties) == 0) {
-        XMoveWindow(display, e.xcreatewindow.window, 0, -0);
+      // this catches spectacle -sc --region
+      if (properties != NULL) {
+        if (strcmp("Spectacle", properties) == 0) {
+          XMoveWindow(display, e.xcreatewindow.window, 0, 0);
+        }
+      };
+
+      // this catches spectacle --region (and seelcting rectangular region from gui)
+      if (properties == NULL) {
+        if (classProperties && strcmp("spectacle", classProperties) == 0) {
+          XMoveWindow(display, e.xcreatewindow.window, 0, 0);
+        }
       }
 
       free(properties);
+      free(classProperties);
       // free(windowTitle);
     }
   }
