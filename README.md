@@ -12,7 +12,7 @@ But then you remember that you've rebound your print screen key to `spectacle --
 
 ![while taking screenshot](readme-resources/oopsie-whoopsie.jpg)
 
-So you go on the internet, straight to ~~the KDE bugtracker and start scre—~~ nope, you go straight to github, clone this repo and compile this shit (`gcc -lX11 gsof.c -o gsof`) (or download the x64 build from 'releases' page, which may or may not work). Then you move the compiled binary somewhere safe and throw it in your startup programs and hope Tamius plugged all the memory leaks because he generally can't write a C program for shit, even when if his life depended on it². If there's memory leaks, then nice — I'll gladly accept the graditudes, but I'll also settle for stars.
+So you go on the internet, straight to ~~the KDE bugtracker and start scre—~~ nope, you go straight to github, clone this repo and compile this shit (`gcc -lX11 gsof.c -o gsof`) (or download the x64 build from 'releases' page, which may or may not work). Then you move the compiled binary somewhere safe and throw it in your startup programs and hope Tamius plugged all the memory leaks because he generally can't write a C program for shit, even if his life depended on it². If there's memory leaks, then nice — I'll gladly accept the gratitudes, but I'll also settle for stars.
 
 
 
